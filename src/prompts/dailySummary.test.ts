@@ -1,18 +1,18 @@
-import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
+import { describe, expect, test, beforeEach, afterEach, setSystemTime } from "bun:test";
 import { dailySummaryPrompt } from "./dailySummary.js";
 
 describe("dailySummaryPrompt", () => {
 	beforeEach(() => {
 		// Mock date for consistent testing
-		vi.useFakeTimers();
-		vi.setSystemTime(new Date("2024-01-15T14:30:00"));
+		setSystemTime(new Date("2024-01-15T14:30:00"));
 	});
 
 	afterEach(() => {
-		vi.useRealTimers();
+		// Reset to real time
+		setSystemTime();
 	});
 
-	it("should have correct metadata", () => {
+	test("should have correct metadata", () => {
 		expect(dailySummaryPrompt.name).toBe("capacities-daily-summary");
 		expect(dailySummaryPrompt.description).toContain("daily summary");
 		expect(dailySummaryPrompt.arguments).toHaveLength(3);
@@ -20,7 +20,7 @@ describe("dailySummaryPrompt", () => {
 		expect(dailySummaryPrompt.arguments[1].required).toBe(false);
 	});
 
-	it("should generate summary with only required fields", async () => {
+	test("should generate summary with only required fields", async () => {
 		const args = {
 			key_activities: "- Completed project proposal\n- Team meeting",
 		};
@@ -35,7 +35,7 @@ describe("dailySummaryPrompt", () => {
 		expect(result).not.toContain("### Tomorrow's Focus");
 	});
 
-	it("should generate complete summary with all fields", async () => {
+	test("should generate complete summary with all fields", async () => {
 		const args = {
 			key_activities: "- Launched new feature",
 			insights: "User feedback was overwhelmingly positive",
@@ -52,7 +52,7 @@ describe("dailySummaryPrompt", () => {
 		expect(result).toContain("- Fix reported bugs");
 	});
 
-	it("should include instructions for use", async () => {
+	test("should include instructions for use", async () => {
 		const args = {
 			key_activities: "Test",
 		};

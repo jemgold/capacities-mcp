@@ -1,23 +1,23 @@
-import { describe, expect, it, beforeEach, vi } from "vitest";
+import { describe, expect, test, beforeEach, mock } from "bun:test";
 import { getApiKey, makeApiRequest } from "./api.js";
 
 // Mock fetch globally
-global.fetch = vi.fn();
+global.fetch = mock(() => {});
 
 describe("API utilities", () => {
 	beforeEach(() => {
-		vi.clearAllMocks();
-		vi.unstubAllEnvs();
+		mock.restore();
+		// Clear environment variables
+		delete process.env.CAPACITIES_API_KEY;
 	});
 
 	describe("getApiKey", () => {
-		it("should return API key from environment variable", () => {
-			vi.stubEnv("CAPACITIES_API_KEY", "test-api-key");
+		test("should return API key from environment variable", () => {
+			process.env.CAPACITIES_API_KEY = "test-api-key";
 			expect(getApiKey()).toBe("test-api-key");
 		});
 
-		it("should throw error when API key is not set", () => {
-			vi.stubEnv("CAPACITIES_API_KEY", "");
+		test("should throw error when API key is not set", () => {
 			expect(() => getApiKey()).toThrow(
 				"CAPACITIES_API_KEY environment variable is required"
 			);
@@ -25,14 +25,14 @@ describe("API utilities", () => {
 	});
 
 	describe("makeApiRequest", () => {
-		it("should make successful API request with proper headers", async () => {
-			vi.stubEnv("CAPACITIES_API_KEY", "test-api-key");
+		test("should make successful API request with proper headers", async () => {
+			process.env.CAPACITIES_API_KEY = "test-api-key";
 			
 			const mockResponse = {
 				ok: true,
 				json: async () => ({ success: true }),
 			};
-			(global.fetch as any).mockResolvedValueOnce(mockResponse);
+			global.fetch = mock(() => Promise.resolve(mockResponse));
 
 			const response = await makeApiRequest("/test-endpoint");
 			
@@ -48,11 +48,11 @@ describe("API utilities", () => {
 			expect(response).toBe(mockResponse);
 		});
 
-		it("should pass through additional options", async () => {
-			vi.stubEnv("CAPACITIES_API_KEY", "test-api-key");
+		test("should pass through additional options", async () => {
+			process.env.CAPACITIES_API_KEY = "test-api-key";
 			
 			const mockResponse = { ok: true };
-			(global.fetch as any).mockResolvedValueOnce(mockResponse);
+			global.fetch = mock(() => Promise.resolve(mockResponse));
 
 			await makeApiRequest("/test", {
 				method: "POST",
@@ -72,8 +72,8 @@ describe("API utilities", () => {
 			);
 		});
 
-		it("should throw error for non-ok responses", async () => {
-			vi.stubEnv("CAPACITIES_API_KEY", "test-api-key");
+		test("should throw error for non-ok responses", async () => {
+			process.env.CAPACITIES_API_KEY = "test-api-key";
 			
 			const mockResponse = {
 				ok: false,
@@ -81,7 +81,7 @@ describe("API utilities", () => {
 				statusText: "Bad Request",
 				text: async () => "Invalid request",
 			};
-			(global.fetch as any).mockResolvedValueOnce(mockResponse);
+			global.fetch = mock(() => Promise.resolve(mockResponse));
 
 			await expect(makeApiRequest("/test")).rejects.toThrow(
 				"Capacities API error: 400 Bad Request - Invalid request"

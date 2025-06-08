@@ -1,15 +1,17 @@
 {
-	"permissions": {
-		"allow": [
-			"Bash(bun add:*)",
-			"Bash(bun remove:*)",
-			"Bash(bunx:*)",
-			"WebFetch(domain:api.capacities.io)",
-			"WebFetch(domain:api.capacities.io)",
-			"Bash(bun run lint:*)",
-			"Bash(bun run:*)",
-			"Bash(git add:*)"
-		],
-		"deny": []
-	}
+  "permissions": {
+    "allow": [
+      "Bash(bun add:*)",
+      "Bash(bun remove:*)",
+      "Bash(bunx:*)",
+      "WebFetch(domain:api.capacities.io)",
+      "WebFetch(domain:api.capacities.io)",
+      "Bash(bun run lint:*)",
+      "Bash(bun run:*)",
+      "Bash(git add:*)",
+      "Bash(bun test:*)",
+      "Bash(rm:*)"
+    ],
+    "deny": []
+  }
 }
