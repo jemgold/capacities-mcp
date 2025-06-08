@@ -1,7 +1,10 @@
 {
   "name": "capacities-mcp",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "dist/server.js",
+  "bin": {
+    "capacities-mcp": "dist/server.js"
+  },
   "scripts": {
     "build": "tsc",
     "start": "tsx src/server.ts",
@@ -11,9 +14,13 @@
     "test": "bun test",
     "format": "biome check --write ."
   },
-  "keywords": ["fastmcp", "mcp", "capacities"],
+  "keywords": [
+    "fastmcp",
+    "mcp",
+    "capacities"
+  ],
   "repository": {
-    "url": "https://github.com/jemgold/capacities-mcp"
+    "url": "git+https://github.com/jemgold/capacities-mcp.git"
   },
   "author": "Jem Gold <591643+jemgold@users.noreply.github.com>",
   "homepage": "https://github.com/jemgold/capacities-mcp",
@@ -25,7 +32,9 @@
     "zod": "^3.24.4"
   },
   "release": {
-    "branches": ["main"],
+    "branches": [
+      "main"
+    ],
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
