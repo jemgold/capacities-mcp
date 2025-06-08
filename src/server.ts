@@ -1,10 +1,37 @@
 import { FastMCP } from "fastmcp";
 import { z } from "zod";
 
-import { add } from "./add.js";
+const API_BASE_URL = "https://api.capacities.io";
+
+function getApiKey(): string {
+	const apiKey = process.env.CAPACITIES_API_KEY;
+	if (!apiKey) {
+		throw new Error("CAPACITIES_API_KEY environment variable is required");
+	}
+	return apiKey;
+}
+
+async function makeApiRequest(endpoint: string, options: RequestInit = {}): Promise<Response> {
+	const apiKey = getApiKey();
+	
+	const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+		...options,
+		headers: {
+			"Authorization": `Bearer ${apiKey}`,
+			"Content-Type": "application/json",
+			...options.headers,
+		},
+	});
+
+	if (!response.ok) {
+		throw new Error(`Capacities API error: ${response.status} ${response.statusText}`);
+	}
+
+	return response;
+}
 
 const server = new FastMCP({
-	name: "Addition",
+	name: "Capacities",
 	version: "1.0.0",
 });
 
