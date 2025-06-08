@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import { FastMCP } from "fastmcp";
-import "dotenv/config";
 
 import {
 	getSpaceInfoTool,
@@ -18,7 +17,7 @@ import {
 
 const server = new FastMCP({
 	name: "Capacities",
-	version: "1.0.0",
+	version: "1.0.1",
 });
 
 // Register all tools
