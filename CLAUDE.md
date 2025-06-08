@@ -20,6 +20,12 @@ The Capacities API documentation is available at:
 
 Set the `CAPACITIES_API_KEY` environment variable with your Capacities API token.
 
+For development, copy `.env.example` to `.env` and add your API key:
+```bash
+cp .env.example .env
+# Edit .env and add your API key
+```
+
 ## Available Tools
 
 - `capacities_list_spaces` - Get user's personal spaces

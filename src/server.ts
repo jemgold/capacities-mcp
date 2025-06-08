@@ -1,5 +1,6 @@
 import { FastMCP } from "fastmcp";
 import { z } from "zod";
+import "dotenv/config";
 
 const API_BASE_URL = "https://api.capacities.io";
 
