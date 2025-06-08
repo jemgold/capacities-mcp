@@ -31,8 +31,18 @@ cp .env.example .env
 - `capacities_list_spaces` - Get user's personal spaces
 - `capacities_get_space_info` - Get structures and collections for a space
 - `capacities_search` - Search content across spaces
+  - `mode` defaults to "title" if not specified
 - `capacities_save_weblink` - Save a web link to a space
+  - Parameters: `titleOverwrite`, `descriptionOverwrite`, `tags`, `mdText`
 - `capacities_save_to_daily_note` - Add text to today's daily note
+  - `origin` only accepts "commandPalette" 
+  - Use `noTimestamp: true` to skip timestamp
+
+## Available Prompts
+
+- `capacities-daily-summary` - Create structured daily summaries
+- `capacities-research-note` - Format research findings  
+- `capacities-meeting-notes` - Structure meeting notes
 
 ## Rate Limits
 

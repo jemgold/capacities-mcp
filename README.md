@@ -37,8 +37,8 @@ bun run build
 {
   "mcpServers": {
     "capacities": {
-      "command": "node",
-      "args": ["path/to/capacities-mcp/dist/server.js"],
+      "command": "npx",
+      "args": ["-y", "capacities-mcp"],
       "env": {
         "CAPACITIES_API_KEY": "your_capacities_api_key_here"
       }

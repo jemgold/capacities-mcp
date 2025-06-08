@@ -1,6 +1,15 @@
 {
 	"permissions": {
-		"allow": ["Bash(bun add:*)", "Bash(bun remove:*)", "Bash(bunx:*)"],
+		"allow": [
+			"Bash(bun add:*)",
+			"Bash(bun remove:*)",
+			"Bash(bunx:*)",
+			"WebFetch(domain:api.capacities.io)",
+			"WebFetch(domain:api.capacities.io)",
+			"Bash(bun run lint:*)",
+			"Bash(bun run:*)",
+			"Bash(git add:*)"
+		],
 		"deny": []
 	}
 }
