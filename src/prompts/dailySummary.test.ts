@@ -1,4 +1,11 @@
-import { describe, expect, test, beforeEach, afterEach, setSystemTime } from "bun:test";
+import {
+	afterEach,
+	beforeEach,
+	describe,
+	expect,
+	setSystemTime,
+	test,
+} from "bun:test";
 import { dailySummaryPrompt } from "./dailySummary.js";
 
 describe("dailySummaryPrompt", () => {
@@ -26,7 +33,7 @@ describe("dailySummaryPrompt", () => {
 		};
 
 		const result = await dailySummaryPrompt.load(args);
-		
+
 		expect(result).toContain("## Daily Summary - 1/15/2024");
 		expect(result).toContain("### Key Activities");
 		expect(result).toContain("- Completed project proposal");
@@ -43,7 +50,7 @@ describe("dailySummaryPrompt", () => {
 		};
 
 		const result = await dailySummaryPrompt.load(args);
-		
+
 		expect(result).toContain("### Key Activities");
 		expect(result).toContain("- Launched new feature");
 		expect(result).toContain("### Insights & Learnings");
@@ -58,6 +65,8 @@ describe("dailySummaryPrompt", () => {
 		};
 
 		const result = await dailySummaryPrompt.load(args);
-		expect(result).toContain("Use this formatted summary for a Capacities daily note:");
+		expect(result).toContain(
+			"Use this formatted summary for a Capacities daily note:",
+		);
 	});
 });

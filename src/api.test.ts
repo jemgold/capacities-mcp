@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach, mock } from "bun:test";
+import { beforeEach, describe, expect, mock, test } from "bun:test";
 import { getApiKey, makeApiRequest } from "./api.js";
 
 // Mock fetch globally
@@ -8,7 +8,7 @@ describe("API utilities", () => {
 	beforeEach(() => {
 		mock.restore();
 		// Clear environment variables
-		delete process.env.CAPACITIES_API_KEY;
+		process.env.CAPACITIES_API_KEY = undefined;
 	});
 
 	describe("getApiKey", () => {
@@ -19,7 +19,7 @@ describe("API utilities", () => {
 
 		test("should throw error when API key is not set", () => {
 			expect(() => getApiKey()).toThrow(
-				"CAPACITIES_API_KEY environment variable is required"
+				"CAPACITIES_API_KEY environment variable is required",
 			);
 		});
 	});
@@ -27,7 +27,7 @@ describe("API utilities", () => {
 	describe("makeApiRequest", () => {
 		test("should make successful API request with proper headers", async () => {
 			process.env.CAPACITIES_API_KEY = "test-api-key";
-			
+
 			const mockResponse = {
 				ok: true,
 				json: async () => ({ success: true }),
@@ -35,7 +35,7 @@ describe("API utilities", () => {
 			global.fetch = mock(() => Promise.resolve(mockResponse));
 
 			const response = await makeApiRequest("/test-endpoint");
-			
+
 			expect(global.fetch).toHaveBeenCalledWith(
 				"https://api.capacities.io/test-endpoint",
 				{
@@ -43,14 +43,14 @@ describe("API utilities", () => {
 						Authorization: "Bearer test-api-key",
 						"Content-Type": "application/json",
 					},
-				}
+				},
 			);
 			expect(response).toBe(mockResponse);
 		});
 
 		test("should pass through additional options", async () => {
 			process.env.CAPACITIES_API_KEY = "test-api-key";
-			
+
 			const mockResponse = { ok: true };
 			global.fetch = mock(() => Promise.resolve(mockResponse));
 
@@ -68,13 +68,13 @@ describe("API utilities", () => {
 						Authorization: "Bearer test-api-key",
 						"Content-Type": "application/json",
 					},
-				}
+				},
 			);
 		});
 
 		test("should throw error for non-ok responses", async () => {
 			process.env.CAPACITIES_API_KEY = "test-api-key";
-			
+
 			const mockResponse = {
 				ok: false,
 				status: 400,
@@ -84,7 +84,7 @@ describe("API utilities", () => {
 			global.fetch = mock(() => Promise.resolve(mockResponse));
 
 			await expect(makeApiRequest("/test")).rejects.toThrow(
-				"Capacities API error: 400 Bad Request - Invalid request"
+				"Capacities API error: 400 Bad Request - Invalid request",
 			);
 		});
 	});

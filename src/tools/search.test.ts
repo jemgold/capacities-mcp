@@ -15,7 +15,9 @@ describe("searchTool", () => {
 		expect(searchTool.parameters.shape.searchTerm).toBeDefined();
 		expect(searchTool.parameters.shape.spaceIds).toBeDefined();
 		expect(searchTool.parameters.shape.mode.isOptional()).toBe(true);
-		expect(searchTool.parameters.shape.filterStructureIds.isOptional()).toBe(true);
+		expect(searchTool.parameters.shape.filterStructureIds.isOptional()).toBe(
+			true,
+		);
 		expect(typeof searchTool.execute).toBe("function");
 	});
 });
