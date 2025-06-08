@@ -165,8 +165,17 @@ server.addTool({
 				body: JSON.stringify(requestBody),
 			});
 
-			const data = await response.json();
-			return JSON.stringify(data, null, 2);
+			const responseText = await response.text();
+			if (!responseText.trim()) {
+				return "Success: Weblink saved (no response data)";
+			}
+
+			try {
+				const data = JSON.parse(responseText);
+				return JSON.stringify(data, null, 2);
+			} catch (parseError) {
+				return `Success: Weblink saved. Response: ${responseText}`;
+			}
 		} catch (error) {
 			throw new Error(
 				`Failed to save weblink: ${error instanceof Error ? error.message : String(error)}`,
@@ -213,13 +222,25 @@ server.addTool({
 				}),
 			};
 
+			console.log(requestBody);
+
 			const response = await makeApiRequest("/save-to-daily-note", {
 				method: "POST",
 				body: JSON.stringify(requestBody),
 			});
 
-			const data = await response.json();
-			return JSON.stringify(data, null, 2);
+			// Check if response has content before parsing JSON
+			const responseText = await response.text();
+			if (!responseText.trim()) {
+				return "Success: Content saved to daily note (no response data)";
+			}
+
+			try {
+				const data = JSON.parse(responseText);
+				return JSON.stringify(data, null, 2);
+			} catch (parseError) {
+				return `Success: Content saved to daily note. Response: ${responseText}`;
+			}
 		} catch (error) {
 			throw new Error(
 				`Failed to save to daily note: ${error instanceof Error ? error.message : String(error)}`,
