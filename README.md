@@ -4,7 +4,7 @@ An MCP (Model Context Protocol) server for [Capacities](https://capacities.io), 
 
 ## Features
 
-This MCP server provides access to all core Capacities API endpoints:
+This MCP server provides access to all current Capacities API endpoints:
 
 - **List Spaces** - Get all your personal spaces
 - **Space Information** - Retrieve detailed space structures and collections
@@ -16,23 +16,8 @@ This MCP server provides access to all core Capacities API endpoints:
 
 ### For Claude Desktop
 
-1. Clone this repository:
-```bash
-git clone https://github.com/jemgold/capacities-mcp.git
-cd capacities-mcp
-```
+Add the Capacities MCP server to your Claude Desktop configuration (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
 
-2. Install dependencies:
-```bash
-bun install
-```
-
-3. Build the server:
-```bash
-bun run build
-```
-
-4. Add to your Claude Desktop configuration (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
 ```json
 {
   "mcpServers": {
@@ -47,23 +32,40 @@ bun run build
 }
 ```
 
+Get your Capacities API key from your [Capacities account settings](https://capacities.io/).
+
+That's it! The server will be automatically downloaded and run when Claude Desktop starts.
+
 ## Development
 
-### Setup
+### Local Setup
 
-1. Copy the example environment file:
+For local development, you'll need to clone and build the project:
+
+1. Clone this repository:
+```bash
+git clone https://github.com/jemgold/capacities-mcp.git
+cd capacities-mcp
+```
+
+2. Install dependencies:
+```bash
+bun install
+```
+
+3. Copy the example environment file:
 ```bash
 cp .env.example .env
 ```
 
-2. Add your Capacities API key to `.env`:
+4. Add your Capacities API key to `.env`:
 ```
 CAPACITIES_API_KEY=your_api_key_here
 ```
 
-3. Install dependencies:
+5. Build the server:
 ```bash
-bun install
+bun run build
 ```
 
 ### Running the Server
