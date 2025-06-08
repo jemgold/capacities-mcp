@@ -138,7 +138,7 @@ Save a web link to a space with optional metadata.
 Add markdown content to today's daily note in a space.
 - **spaceId**: UUID of the target space
 - **mdText**: Markdown content to add
-- **origin** (optional): Origin label for the content
+- **origin** (optional): Origin label for the content (only "commandPalette" is supported)
 - **addTimestamp** (optional): Whether to include a timestamp
 
 ## Rate Limits

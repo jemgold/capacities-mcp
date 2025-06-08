@@ -18,18 +18,21 @@ async function makeApiRequest(
 ): Promise<Response> {
 	const apiKey = getApiKey();
 
-	const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+	const requestOptions = {
 		...options,
 		headers: {
 			Authorization: `Bearer ${apiKey}`,
 			"Content-Type": "application/json",
 			...options.headers,
 		},
-	});
+	};
+
+	const response = await fetch(`${API_BASE_URL}${endpoint}`, requestOptions);
 
 	if (!response.ok) {
+		const errorText = await response.text();
 		throw new Error(
-			`Capacities API error: ${response.status} ${response.statusText}`,
+			`Capacities API error: ${response.status} ${response.statusText} - ${errorText}`,
 		);
 	}
 
@@ -134,7 +137,8 @@ server.addTool({
 		mode: z
 			.enum(["fullText", "title"])
 			.optional()
-			.describe("Search mode: fullText or title only"),
+			.describe("Search mode: fullText or title only")
+			.default("title"),
 		filterStructureIds: z
 			.array(z.string().uuid())
 			.optional()
@@ -155,9 +159,12 @@ server.addTool({
 			const requestBody = {
 				spaceId: args.spaceId,
 				url: args.url,
-				...(args.title && { title: args.title }),
-				...(args.description && { description: args.description }),
+				...(args.titleOverwrite && { titleOverwrite: args.titleOverwrite }),
+				...(args.descriptionOverwrite && {
+					descriptionOverwrite: args.descriptionOverwrite,
+				}),
 				...(args.tags && { tags: args.tags }),
+				...(args.mdText && { mdText: args.mdText }),
 			};
 
 			const response = await makeApiRequest("/save-weblink", {
@@ -189,18 +196,30 @@ server.addTool({
 			.uuid()
 			.describe("The UUID of the space to save the weblink to"),
 		url: z.string().url().describe("The URL to save"),
-		title: z
+		titleOverwrite: z
 			.string()
+			.max(500)
 			.optional()
 			.describe("Optional custom title for the weblink"),
-		description: z
+		descriptionOverwrite: z
 			.string()
+			.max(500)
 			.optional()
 			.describe("Optional description for the weblink"),
 		tags: z
 			.array(z.string())
+			.max(30)
 			.optional()
-			.describe("Optional array of tags to apply to the weblink"),
+			.describe(
+				"Optional Tags to add to the weblink. Tags need to exactly match your tag names in Capacities, otherwise they will be created.",
+			),
+		mdText: z
+			.string()
+			.max(200000)
+			.optional()
+			.describe(
+				"Text formatted as markdown that will be added to the notes section",
+			),
 	}),
 });
 
@@ -221,8 +240,6 @@ server.addTool({
 					addTimestamp: args.addTimestamp,
 				}),
 			};
-
-			console.log(requestBody);
 
 			const response = await makeApiRequest("/save-to-daily-note", {
 				method: "POST",
@@ -255,15 +272,18 @@ server.addTool({
 			.describe("The UUID of the space to save to the daily note"),
 		mdText: z
 			.string()
+			.max(200000)
 			.describe("The markdown text to add to today's daily note"),
 		origin: z
-			.string()
+			.enum(["commandPalette"])
 			.optional()
-			.describe("Optional origin label for the content"),
-		addTimestamp: z
+			.describe(
+				"Optional origin label for the content (only 'commandPalette' is supported)",
+			),
+		noTimestamp: z
 			.boolean()
 			.optional()
-			.describe("Whether to add a timestamp to the content"),
+			.describe("If true, no time stamp will be added to the note"),
 	}),
 });
 
