@@ -130,16 +130,17 @@ Search for content across your spaces with optional filtering.
 Save a web link to a space with optional metadata.
 - **spaceId**: UUID of the target space
 - **url**: The URL to save
-- **title** (optional): Custom title for the link
-- **description** (optional): Description text
-- **tags** (optional): Array of tags
+- **titleOverwrite** (optional): Custom title for the link
+- **descriptionOverwrite** (optional): Description text
+- **tags** (optional): Array of tags. Tags need to exactly match your tag names in Capacities, otherwise they will be created.
+- **mdText** (optional): Text formatted as markdown that will be added to the notes section
 
 ### `capacities_save_to_daily_note`
 Add markdown content to today's daily note in a space.
 - **spaceId**: UUID of the target space
 - **mdText**: Markdown content to add
 - **origin** (optional): Origin label for the content (only "commandPalette" is supported)
-- **addTimestamp** (optional): Whether to include a timestamp
+- **noTimestamp** (optional): If true, no timestamp will be added to the note
 
 ## Rate Limits
 

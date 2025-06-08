@@ -236,8 +236,8 @@ server.addTool({
 				spaceId: args.spaceId,
 				mdText: args.mdText,
 				...(args.origin && { origin: args.origin }),
-				...(args.addTimestamp !== undefined && {
-					addTimestamp: args.addTimestamp,
+				...(args.noTimestamp !== undefined && {
+					noTimestamp: args.noTimestamp,
 				}),
 			};
 
