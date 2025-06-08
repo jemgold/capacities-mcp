@@ -287,6 +287,143 @@ server.addTool({
 	}),
 });
 
+server.addPrompt({
+	name: "capacities-daily-summary",
+	description: "Create a structured daily summary for your Capacities daily note",
+	arguments: [
+		{
+			name: "key_activities",
+			description: "Main activities or events from today",
+			required: true,
+		},
+		{
+			name: "insights",
+			description: "Key insights, learnings, or realizations",
+			required: false,
+		},
+		{
+			name: "tomorrow_focus",
+			description: "What you want to focus on tomorrow",
+			required: false,
+		},
+	],
+	load: async (args) => {
+		let summary = `## Daily Summary - ${new Date().toLocaleDateString()}\n\n`;
+		summary += `### Key Activities\n${args.key_activities}\n\n`;
+		
+		if (args.insights) {
+			summary += `### Insights & Learnings\n${args.insights}\n\n`;
+		}
+		
+		if (args.tomorrow_focus) {
+			summary += `### Tomorrow's Focus\n${args.tomorrow_focus}\n\n`;
+		}
+		
+		summary += `---\n*Generated at ${new Date().toLocaleTimeString()}*`;
+		
+		return `Use this formatted summary for a Capacities daily note:\n\n${summary}`;
+	},
+});
+
+server.addPrompt({
+	name: "capacities-research-note",
+	description: "Format research findings for saving to Capacities",
+	arguments: [
+		{
+			name: "topic",
+			description: "The research topic or subject",
+			required: true,
+		},
+		{
+			name: "source_url",
+			description: "URL of the source material",
+			required: false,
+		},
+		{
+			name: "key_points",
+			description: "Main findings or key points",
+			required: true,
+		},
+		{
+			name: "questions",
+			description: "Follow-up questions or areas to explore",
+			required: false,
+		},
+	],
+	load: async (args) => {
+		let note = `# Research: ${args.topic}\n\n`;
+		
+		if (args.source_url) {
+			note += `**Source:** ${args.source_url}\n\n`;
+		}
+		
+		note += `## Key Findings\n${args.key_points}\n\n`;
+		
+		if (args.questions) {
+			note += `## Questions to Explore\n${args.questions}\n\n`;
+		}
+		
+		note += `---\n*Research note created on ${new Date().toLocaleDateString()}*`;
+		
+		return `Here's a formatted research note ready for Capacities:\n\n${note}\n\nWould you like me to save this to your Capacities space?`;
+	},
+});
+
+server.addPrompt({
+	name: "capacities-meeting-notes",
+	description: "Structure meeting notes for Capacities daily note",
+	arguments: [
+		{
+			name: "meeting_title",
+			description: "Title or topic of the meeting",
+			required: true,
+		},
+		{
+			name: "attendees",
+			description: "Who attended the meeting",
+			required: false,
+		},
+		{
+			name: "key_decisions",
+			description: "Important decisions made",
+			required: false,
+		},
+		{
+			name: "action_items",
+			description: "Action items and next steps",
+			required: false,
+		},
+		{
+			name: "notes",
+			description: "Additional notes or discussion points",
+			required: false,
+		},
+	],
+	load: async (args) => {
+		let meeting = `## Meeting: ${args.meeting_title}\n`;
+		meeting += `**Date:** ${new Date().toLocaleDateString()}\n`;
+		
+		if (args.attendees) {
+			meeting += `**Attendees:** ${args.attendees}\n`;
+		}
+		meeting += `\n`;
+		
+		if (args.key_decisions) {
+			meeting += `### Decisions\n${args.key_decisions}\n\n`;
+		}
+		
+		if (args.action_items) {
+			meeting += `### Action Items\n${args.action_items}\n\n`;
+		}
+		
+		if (args.notes) {
+			meeting += `### Notes\n${args.notes}\n\n`;
+		}
+		
+		return `Here are your structured meeting notes:\n\n${meeting}Ready to add to your Capacities daily note?`;
+	},
+});
+
 server.start({
 	transportType: "stdio",
 });

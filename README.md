@@ -151,6 +151,50 @@ The Capacities API has the following rate limits:
 - `/save-weblink`: 10 requests per 60 seconds
 - `/save-to-daily-note`: 5 requests per 60 seconds
 
+## Example Prompts
+
+Here are some example prompts you can use with Claude when this MCP server is configured:
+
+### Getting Started
+```
+"Show me all my Capacities spaces"
+"What spaces do I have in Capacities?"
+```
+
+### Exploring Your Knowledge Base
+```
+"Get detailed information about my main workspace in Capacities"
+"What structures and collections are in my [space name] space?"
+```
+
+### Searching Content
+```
+"Search for 'project management' across all my Capacities spaces"
+"Find all notes mentioning 'machine learning' in my research space"
+"Search for 'meeting notes' but only check titles, not full content"
+```
+
+### Saving Information
+```
+"Save this article to my research space: https://example.com/article"
+"Bookmark this GitHub repo in my coding space with tags 'javascript' and 'tools'"
+"Save this link with a custom title and description to my resources space"
+```
+
+### Daily Notes
+```
+"Add a summary of today's key insights to my daily note"
+"Save these meeting notes to today's daily note in my work space"
+"Add this quote to my daily note: [your quote here]"
+```
+
+### Advanced Usage
+```
+"Search for 'productivity' in my work and personal spaces, but filter to only show task-related structures"
+"Save this research paper to my academic space and add it to today's daily note as well"
+"Find all my notes about 'AI tools' and then save the best ones as bookmarks"
+```
+
 ## License
 
 MIT - see [LICENSE](LICENSE) file for details.
