@@ -7,6 +7,7 @@
 	},
 	"scripts": {
 		"build": "tsc",
+		"prepublishOnly": "bun run build",
 		"start": "tsx src/server.ts",
 		"dev": "fastmcp dev src/server.ts",
 		"inspect": "fastmcp inspect src/server.ts",
@@ -40,7 +41,6 @@
 		"@biomejs/biome": "^1.9.4",
 		"@tsconfig/node22": "^22.0.1",
 		"@types/node": "^22.15.30",
-		"dotenv": "^16.5.0",
 		"jiti": "^2.4.2",
 		"semantic-release": "^24.2.3",
 		"tsx": "^4.19.4",
