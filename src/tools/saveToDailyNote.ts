@@ -12,15 +12,15 @@ export const saveToDailyNoteTool = {
 		spaceId: string;
 		mdText: string;
 		origin?: "commandPalette";
-		noTimestamp?: boolean;
+		NoTimeStamp?: boolean; // <-- changed here
 	}) => {
 		try {
 			const requestBody = {
 				spaceId: args.spaceId,
 				mdText: args.mdText,
 				...(args.origin && { origin: args.origin }),
-				...(args.noTimestamp !== undefined && {
-					noTimestamp: args.noTimestamp,
+				...(args.NoTimeStamp !== undefined && {
+					NoTimeStamp: args.NoTimeStamp, // <-- changed here
 				}),
 			};
 
@@ -63,7 +63,7 @@ export const saveToDailyNoteTool = {
 			.describe(
 				"Optional origin label for the content (only 'commandPalette' is supported)",
 			),
-		noTimestamp: z
+		NoTimeStamp: z // <-- changed here
 			.boolean()
 			.optional()
 			.describe("If true, no time stamp will be added to the note"),

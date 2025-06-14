@@ -17,7 +17,7 @@ describe("saveToDailyNoteTool", () => {
 		expect(saveToDailyNoteTool.parameters.shape.spaceId).toBeDefined();
 		expect(saveToDailyNoteTool.parameters.shape.mdText).toBeDefined();
 		expect(saveToDailyNoteTool.parameters.shape.origin.isOptional()).toBe(true);
-		expect(saveToDailyNoteTool.parameters.shape.noTimestamp.isOptional()).toBe(
+		expect(saveToDailyNoteTool.parameters.shape.NoTimeStamp.isOptional()).toBe(
 			true,
 		);
 		expect(typeof saveToDailyNoteTool.execute).toBe("function");
